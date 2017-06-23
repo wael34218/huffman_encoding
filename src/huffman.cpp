@@ -99,15 +99,17 @@ Encoding encode_content(string text, CodeTable encodings){
     cout << *it;
   }
   cout << "\n\n";
-  cout << text;
-  cout << "\n\n";
-
   return binary_encoding;
 }
 
-void write_file(Encoding encoding, string filename){
-  ofstream OutFile;
-  OutFile.open(filename, ios::out);
-  OutFile << bitset<8>('a');
-  OutFile.close();
+void write_file(Encoding binary_encoding, string filename){
+  const std::size_t n = binary_encoding.size();
+  char byteArray[(int)ceil(n/8.0)];
+
+  for (std::size_t i = 0; i < n / 8; ++i)
+    for (std::size_t j = 0; j < 8; ++j)
+      if (binary_encoding[i * 8 + j] == true)
+        byteArray[i] |= 1 << j;
+  std::ofstream out(filename, std::ios::binary);
+  out.write(byteArray, sizeof(byteArray));
 }

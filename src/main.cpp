@@ -28,6 +28,6 @@ int main(){
 
   Encoding file_encoding = encode_content(pp, encodings);
   
-  write_file(file_encoding, "../output/encoded");
+  write_file(file_encoding, "encoded.bin");
   return 0;
 }

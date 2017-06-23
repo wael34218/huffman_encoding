@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <map>
+#include <math.h>
 #include <fstream>
 #include <bitset>
 

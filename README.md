@@ -1,4 +1,5 @@
 # Huffman Encoding
+A toy implementation of Huffman encoding.
 
 ## Build
 ```

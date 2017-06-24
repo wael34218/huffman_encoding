@@ -103,6 +103,7 @@ Encoding encode_content(string text, CodeTable encodings){
 }
 
 void write_file(Encoding binary_encoding, string filename){
+  // TODO: add code_table into the encoded file
   const std::size_t n = binary_encoding.size();
   char byteArray[(int)ceil(n/8.0)];
 
@@ -113,3 +114,7 @@ void write_file(Encoding binary_encoding, string filename){
   std::ofstream out(filename, std::ios::binary);
   out.write(byteArray, sizeof(byteArray));
 }
+
+// TODO: Write a function to read an encoded file, outputs vector of encodings and code_table
+
+// TODO: Write a decode function taking in code_table and encoding vector and outputs the original text

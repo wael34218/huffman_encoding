@@ -23,10 +23,13 @@ int main(){
   // Step 5
   HuffmanNode * tree_head = build_huffman_tree(head);
   // Step 6
-  CodeTable encodings = generate_encodings(tree_head);
-  print_encoding(encodings);
+  CodeTable code_table= generate_encodings(tree_head);
+  print_code_table(code_table);
 
-  Encoding file_encoding = encode_content(pp, encodings);
+  Encoding file_encoding = encode_content(pp, code_table);
+
+  RevCodeTable rev_code_table = reverse_code_table(code_table);
+  print_rev_code_table(rev_code_table);
   
   write_file(file_encoding, "encoded.bin");
   return 0;

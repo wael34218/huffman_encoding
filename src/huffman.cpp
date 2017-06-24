@@ -102,6 +102,19 @@ Encoding encode_content(string text, CodeTable encodings){
   return binary_encoding;
 }
 
+RevCodeTable reverse_code_table(CodeTable code_table){
+  RevCodeTable reversed;
+  for(CodeTable::iterator it=code_table.begin(); it!=code_table.end(); it++){
+    reversed.insert(pair<Encoding, char>(it->second,it->first));
+  }
+  return reversed;
+}
+
+string decode_content(Encoding binary_encoding, RevCodeTable encodings){
+  string text = "";
+  return text;
+}
+
 void write_file(Encoding binary_encoding, string filename){
   // TODO: add code_table into the encoded file
   const std::size_t n = binary_encoding.size();

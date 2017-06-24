@@ -11,6 +11,7 @@ using namespace std;
 
 typedef vector<bool> Encoding;
 typedef map<char, Encoding> CodeTable;
+typedef map<Encoding, char> RevCodeTable;
 
 struct HuffmanNode{
   char c;

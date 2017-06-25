@@ -84,6 +84,10 @@ void traverse_tree(HuffmanNode *head, CodeTable &encodings, Encoding base_encodi
     traverse_tree(head->left_child, encodings, base_encoding);
     base_encoding.pop_back();
   }else{
+    // This is to handle if there is only one character in the whole file
+    if(base_encoding.empty()){
+      base_encoding.push_back(true);
+    }
     // Add character to encodings
     encodings[head->c] = base_encoding;
   }
@@ -110,8 +114,16 @@ RevCodeTable reverse_code_table(CodeTable code_table){
   return reversed;
 }
 
-string decode_content(Encoding binary_encoding, RevCodeTable encodings){
+string decode_content(Encoding binary_encoding, RevCodeTable rev_code_table){
   string text = "";
+  Encoding tmp;
+  for(int i=0; i<binary_encoding.size(); i++){
+    tmp.push_back(binary_encoding[i]);
+    if(rev_code_table.count(tmp)){
+      text += rev_code_table[tmp];
+      tmp.clear();
+    }
+  }
   return text;
 }
 

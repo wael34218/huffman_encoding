@@ -5,10 +5,11 @@
 
 /* text -> FreqTable (map<char, count>) -> FreqVector -> sorted huffman_code -> CodeTable (map<char, code>) */
 
-int main(){
-  string text;
-  cout << "Input string to compress:\n";
-  getline(cin, text);
+int main(int argc, char *argv[]){
+  ifstream infile(argv[1]);
+  string text((istreambuf_iterator<char>(infile)),istreambuf_iterator<char>());
+  // cout << "Input string to compress:\n";
+  // getline(cin, text);
   // Step 1: Count the frequencies of each character in a map
   FreqTable char_counts = counts(text);
 
@@ -44,9 +45,9 @@ int main(){
   print_rev_code_table(rev_code_table);
 
   // Step 9: Write decoded content into file
-  write_file(file_encoding, "encoded.bin");
+  write_file(file_encoding, "output_compressed/output.cmp");
 
-  Encoding file = read_file("encoded.bin");
+  Encoding file = read_file("output_compressed/output.cmp");
   cout << "\n\nAfter Load: ";
   for(Encoding::iterator it=file.begin(); it!=file.end(); it++){
     cout << *it;

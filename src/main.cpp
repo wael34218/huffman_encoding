@@ -33,6 +33,11 @@ int main(){
 
   // Step 7: Use hastable to encode the original text
   Encoding file_encoding = encode_content(text, code_table);
+  cout << "\n\nBefore Save: ";
+  for(Encoding::iterator it=file_encoding.begin(); it!=file_encoding.end(); it++){
+    cout << *it;
+  }
+  cout << "\n\n";
 
   // Step 8: Prepare reverse lookup map for decoding
   RevCodeTable rev_code_table = reverse_code_table(code_table);
@@ -41,8 +46,15 @@ int main(){
   // Step 9: Write decoded content into file
   write_file(file_encoding, "encoded.bin");
 
+  Encoding file = read_file("encoded.bin");
+  cout << "\n\nAfter Load: ";
+  for(Encoding::iterator it=file.begin(); it!=file.end(); it++){
+    cout << *it;
+  }
+  cout << "\n\n";
+
   // Step 10: Decode content of the file
-  string decoded = decode_content(file_encoding, rev_code_table);
+  string decoded = decode_content(file, rev_code_table);
   cout << endl << endl << "Decoded: " << decoded << endl << endl;
   return 0;
 }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>     // atoi
 #include <iostream>
 #include <vector>
 #include <utility>

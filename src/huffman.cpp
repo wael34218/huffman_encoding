@@ -109,43 +109,94 @@ RevCodeTable reverse_code_table(CodeTable code_table){
   return reversed;
 }
 
-string decode_content(Encoding binary_encoding, RevCodeTable rev_code_table){
+void write_file(Encoding encoding, CodeTable code_table, int size, string filename){
+  std::ofstream code_file(filename);
+
+  // Write how many characters in file
+  code_file << size << "|";
+
+  // Write reverse code table
+  for(CodeTable::iterator it=code_table.begin(); it!=code_table.end(); it++){
+    code_file << it->first;
+    for(int i = 0; i < it->second.size(); i++){
+      if(it->second[i])
+        code_file << "1";
+      else
+        code_file << "0";
+    }
+    code_file << "|";
+  }
+  code_file << "||";
+  code_file.close();
+  const std::size_t n = encoding.size();
+  int limit = (int)ceil(n/8.0);
+  char byteArray[limit];
+
+  // Write binary data
+  for (std::size_t i = 0; i < limit; ++i)
+    for (std::size_t j = 0; j < 8; ++j)
+      byteArray[i] ^= (-encoding[i * 8 + j] ^ byteArray[i]) & (1 << j);
+
+  std::ofstream out(filename, std::ios::binary | fstream::app);
+  out.write(byteArray, sizeof(byteArray));
+  out.close();
+}
+
+string decode_file(string filename){
+  string tmp;
+  char tchar;
+  int size;
+  RevCodeTable rev_code_table;
+  Encoding encoding;
+  Encoding char_encoding;
+  std::ifstream file(filename);
+  vector<char> res = vector<char>((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+  int i = 0;
+  while(res[i] != '|'){
+    tmp += res[i];
+    i++;
+  }
+  i++;
+  size = atoi(tmp.c_str());  
+
+  for (; i < res.size(); ++i){
+    tchar = res[i];
+    i++;
+    if(res[i] == '|')
+      break;
+    char_encoding.clear();
+    while(res[i] != '|'){
+      if(res[i] == '1')
+        char_encoding.push_back(true);
+      else
+        char_encoding.push_back(false);
+      i++;
+    }
+    rev_code_table.insert(pair<Encoding, char>(char_encoding,tchar));
+  }
+  i++;
+
+  for (; i < res.size(); ++i)
+    for (int j = 0; j < 8; ++j)
+      encoding.push_back((res[i] >> j) & 1);
+  
+  string decoded = decode_content(encoding, rev_code_table, size);
+  return decoded;
+}
+
+string decode_content(Encoding binary_encoding, RevCodeTable rev_code_table, int size){
   string text = "";
   Encoding tmp;
+  int chars = 0;
   for(int i=0; i<binary_encoding.size(); i++){
     tmp.push_back(binary_encoding[i]);
     if(rev_code_table.count(tmp)){
       text += rev_code_table[tmp];
+      chars++;
       tmp.clear();
+      if(chars >= size)
+        break;
     }
   }
   return text;
 }
-
-void write_file(Encoding binary_encoding, string filename){
-  // TODO: add code_table into the encoded file
-  const std::size_t n = binary_encoding.size();
-  int limit = (int)ceil(n/8.0);
-  char byteArray[limit];
-
-  for (std::size_t i = 0; i < limit; ++i)
-    for (std::size_t j = 0; j < 8; ++j)
-      byteArray[i] ^= (-binary_encoding[i * 8 + j] ^ byteArray[i]) & (1 << j);
-
-  std::ofstream out(filename, std::ios::binary);
-  out.write(byteArray, sizeof(byteArray));
-}
-
-Encoding read_file(string filename){
-  Encoding encoding;
-  std::ifstream file(filename, std::ios::binary);
-  vector<char> res = vector<char>((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
-  for (int i = 0; i < res.size(); ++i)
-    for (int j = 0; j < 8; ++j)
-      encoding.push_back((res[i] >> j) & 1);
-  return encoding;
-}
-
-// TODO: Write a function to read an encoded file, outputs vector of encodings and code_table
-
-// TODO: Write a decode function taking in code_table and encoding vector and outputs the original text

@@ -8,5 +8,5 @@ g++ src/main.cpp -o bin/main
 
 ## Run
 ```
-./bin/main
+./bin/main sample_input/hackernews.html
 ```

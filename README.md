@@ -30,7 +30,8 @@ The hashtable is pipe-separated key value store.
 
 ## Output
 
-| File | Original Size | Compressed Size |
-| --- | --- | --- |
-| hackernews.html | 34KB | 22KB |
-| newstest2013.en | 333KB | 190KB |
+| File | Original Size | Compressed Size | Reduction Percentage |
+| --- | --- | --- | --- |
+| hackernews.html | 34KB | 22KB | 35.3 % |
+| newstest2013.en | 333KB | 190KB | 42.9% |
+| enOST\_sample.txt | 9.2MB | 5.3MB | 42.4% |

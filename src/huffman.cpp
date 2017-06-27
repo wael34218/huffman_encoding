@@ -37,7 +37,7 @@ HuffmanNode * build_huffman_tree(HuffmanNode *head){
       // then put the new node in front.
       newNode->next = head;
       head = newNode;
-      print_list(head);
+      // print_list(head);
       continue;
     }
     p = head;
@@ -63,7 +63,7 @@ HuffmanNode * build_huffman_tree(HuffmanNode *head){
         p = p->next;
       }
     }
-    print_list(head);
+    // print_list(head);
   }
   return head;
 }

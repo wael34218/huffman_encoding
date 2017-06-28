@@ -9,11 +9,11 @@ g++ src/krammer.cpp -o bin/krammer
 ## Run
 To compress a file run the following command:
 ```
-./bin/krammer encode -in sample_input/hackernews.html -out sample_compressed/hackernews.krm
+./bin/krammer encode -in sample_input/hackernews.html.txt -out sample_compressed/hackernews.html.krm
 ```
 To decode the file run:
 ```
-./bin/krammer decode -in sample_compressed/hackernews.krm -out sample_decompressed/hackernews.html
+./bin/krammer decode -in sample_compressed/hackernews.html.krm -out sample_decompressed/hackernews.html.txt
 ```
 
 ## Under the hood

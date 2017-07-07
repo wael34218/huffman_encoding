@@ -1,19 +1,20 @@
 # Krammer
 A toy implementation of Huffman encoding. It crams content of input file into a compressed output file.
 
-## Build
+## Build and Install
 ```
 make
+make install
 ```
 
 ## Run
 To compress a file run the following command:
 ```
-./bin/krammer encode -in sample_input/hackernews.html.txt -out sample_compressed/hackernews.html.krm
+krammer encode -in sample_input/hackernews.html.txt -out sample_compressed/hackernews.html.krm
 ```
 To decode the file run:
 ```
-./bin/krammer decode -in sample_compressed/hackernews.html.krm -out sample_decompressed/hackernews.html.txt
+krammer decode -in sample_compressed/hackernews.html.krm -out sample_decompressed/hackernews.html.txt
 ```
 
 ## Under the hood

@@ -3,7 +3,7 @@ A toy implementation of Huffman encoding. It crams content of input file into a 
 
 ## Build
 ```
-g++ src/krammer.cpp -o bin/krammer
+make
 ```
 
 ## Run
